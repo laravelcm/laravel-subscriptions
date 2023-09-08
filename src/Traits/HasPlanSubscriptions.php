@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Subscriptions\Traits;
+namespace Laravelcm\Subscriptions\Traits;
 
 use Carbon\Carbon;
-use Rinvex\Subscriptions\Models\Plan;
-use Rinvex\Subscriptions\Services\Period;
 use Illuminate\Database\Eloquent\Collection;
-use Rinvex\Subscriptions\Models\PlanSubscription;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Laravelcm\Subscriptions\Models\Subscription;
+use Laravelcm\Subscriptions\Models\Plan;
+use Laravelcm\Subscriptions\Services\Period;
 
 trait HasPlanSubscriptions
 {
@@ -18,22 +18,17 @@ trait HasPlanSubscriptions
      *
      * @param string $related
      * @param string $name
-     * @param string $type
-     * @param string $id
-     * @param string $localKey
+     * @param string|null $type
+     * @param string|null $id
+     * @param string|null $localKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    abstract public function morphMany($related, $name, $type = null, $id = null, $localKey = null);
+    abstract public function morphMany(string $related, string $name, ?string $type = null, ?string $id = null, ?string $localKey = null): MorphMany;
 
-    /**
-     * Boot the HasPlanSubscriptions trait for the model.
-     *
-     * @return void
-     */
-    protected static function bootHasSubscriptions()
+    protected static function bootHasSubscriptions(): void
     {
-        static::deleted(function ($plan) {
+        static::deleted(function ($plan): void {
             $plan->planSubscriptions()->delete();
         });
     }
@@ -45,14 +40,9 @@ trait HasPlanSubscriptions
      */
     public function planSubscriptions(): MorphMany
     {
-        return $this->morphMany(config('rinvex.subscriptions.models.plan_subscription'), 'subscriber', 'subscriber_type', 'subscriber_id');
+        return $this->morphMany(config('laravel-subscriptions.models.subscription'), 'subscriber', 'subscriber_type', 'subscriber_id');
     }
 
-    /**
-     * A model may have many active plan subscriptions.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function activePlanSubscriptions(): Collection
     {
         return $this->planSubscriptions->reject->inactive();
@@ -63,9 +53,9 @@ trait HasPlanSubscriptions
      *
      * @param string $subscriptionSlug
      *
-     * @return \Rinvex\Subscriptions\Models\PlanSubscription|null
+     * @return \Laravelcm\Subscriptions\Models\Subscription|null
      */
-    public function planSubscription(string $subscriptionSlug): ?PlanSubscription
+    public function planSubscription(string $subscriptionSlug): ?Subscription
     {
         return $this->planSubscriptions()->where('slug', $subscriptionSlug)->first();
     }
@@ -77,9 +67,12 @@ trait HasPlanSubscriptions
      */
     public function subscribedPlans(): Collection
     {
-        $planIds = $this->planSubscriptions->reject->inactive()->pluck('plan_id')->unique();
+        $planIds = $this->planSubscriptions->reject
+            ->inactive()
+            ->pluck('plan_id')
+            ->unique();
 
-        return app('rinvex.subscriptions.plan')->whereIn('id', $planIds)->get();
+        return app('laravelcm.subscriptions.models.plan')->whereIn('id', $planIds)->get();
     }
 
     /**
@@ -89,9 +82,11 @@ trait HasPlanSubscriptions
      *
      * @return bool
      */
-    public function subscribedTo($planId): bool
+    public function subscribedTo(int $planId): bool
     {
-        $subscription = $this->planSubscriptions()->where('plan_id', $planId)->first();
+        $subscription = $this->planSubscriptions()
+            ->where('plan_id', $planId)
+            ->first();
 
         return $subscription && $subscription->active();
     }
@@ -99,15 +94,15 @@ trait HasPlanSubscriptions
     /**
      * Subscribe subscriber to a new plan.
      *
-     * @param string                            $subscription
-     * @param \Rinvex\Subscriptions\Models\Plan $plan
-     * @param \Carbon\Carbon|null               $startDate
+     * @param string $subscription
+     * @param \Laravelcm\Subscriptions\Models\Plan $plan
+     * @param \Carbon\Carbon|null $startDate
      *
-     * @return \Rinvex\Subscriptions\Models\PlanSubscription
+     * @return \Laravelcm\Subscriptions\Models\Subscription
      */
-    public function newPlanSubscription($subscription, Plan $plan, Carbon $startDate = null): PlanSubscription
+    public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
     {
-        $trial = new Period($plan->trial_interval, $plan->trial_period, $startDate ?? now());
+        $trial = new Period($plan->trial_interval, $plan->trial_period, $startDate ?? Carbon::now());
         $period = new Period($plan->invoice_interval, $plan->invoice_period, $trial->getEndDate());
 
         return $this->planSubscriptions()->create([

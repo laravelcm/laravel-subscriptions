@@ -1,6 +1,6 @@
 # Laravel Subscriptions
 
-**Rinvex Subscriptions** is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
+**Laravel Subscriptions** is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
 
 [![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-subscriptions.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-subscriptions)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/laravel-subscriptions.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/laravel-subscriptions/)
@@ -19,17 +19,17 @@
 
 1. Install the package via composer:
     ```shell
-    composer require rinvex/laravel-subscriptions
+    composer require laravelcm/laravel-subscriptions
     ```
 
 2. Publish resources (migrations and config files):
     ```shell
-    php artisan rinvex:publish:subscriptions
+    php artisan publish:subscriptions
     ```
 
 3. Execute migrations via the following command:
     ```shell
-    php artisan rinvex:migrate:subscriptions
+    php artisan migrate
     ```
 
 4. Done!
@@ -39,12 +39,12 @@
 
 ### Add Subscriptions to User model
 
-**Rinvex Subscriptions** has been specially made for Eloquent and simplicity has been taken very serious as in any other Laravel related aspect. To add Subscription functionality to your User model just use the `\Rinvex\Subscriptions\Traits\HasPlanSubscriptions` trait like this:
+**Laravel Subscriptions** has been specially made for Eloquent and simplicity has been taken very serious as in any other Laravel related aspect. To add Subscription functionality to your User model just use the `\Rinvex\Subscriptions\Traits\HasPlanSubscriptions` trait like this:
 
 ```php
 namespace App\Models;
 
-use Rinvex\Subscriptions\Traits\HasPlanSubscriptions;
+use Laravelcm\Subscriptions\Traits\HasPlanSubscriptions;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable

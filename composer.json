@@ -1,81 +1,83 @@
 {
-    "name": "rinvex/laravel-subscriptions",
-    "description": "Rinvex Subscriptions is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.",
-    "type": "library",
-    "keywords": [
-        "plan",
-        "value",
-        "laravel",
-        "feature",
-        "database",
-        "recurring",
-        "subscription"
-    ],
-    "license": "MIT",
-    "homepage": "https://rinvex.com",
-    "support": {
-        "email": "help@rinvex.com",
-        "issues": "https://github.com/rinvex/laravel-subscriptions/issues",
-        "source": "https://github.com/rinvex/laravel-subscriptions",
-        "docs": "https://github.com/rinvex/laravel-subscriptions/blob/master/README.md"
+  "name": "laravelcm/laravel-subscriptions",
+  "description": "Laravel Subscriptions is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.",
+  "type": "library",
+  "keywords": [
+    "plan",
+    "value",
+    "laravel",
+    "feature",
+    "database",
+    "recurring",
+    "subscription"
+  ],
+  "license": "MIT",
+  "homepage": "https://laravel.cm",
+  "support": {
+    "email": "support@laravel.cm",
+    "issues": "https://github.com/laravelcm/laravel-subscriptions/issues",
+    "source": "https://github.com/laravelcm/laravel-subscriptions",
+    "docs": "https://github.com/laravelcm/laravel-subscriptions/blob/master/README.md"
+  },
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "homepage": "https://arthurmonney.me",
+      "email": "arthur@laravel.cm"
     },
-    "authors": [
-        {
-            "name": "Rinvex LLC",
-            "homepage": "https://rinvex.com",
-            "email": "help@rinvex.com"
-        },
-        {
-            "name": "Abdelrahman Omran",
-            "homepage": "https://omranic.com",
-            "email": "me@omranic.com",
-            "role": "Project Lead"
-        },
-        {
-            "name": "The Generous Laravel Community",
-            "homepage": "https://github.com/rinvex/laravel-subscriptions/contributors"
-        }
-    ],
-    "require": {
-        "php": "^8.0.0",
-        "illuminate/console": "^9.0.0 || ^10.0.0",
-        "illuminate/database": "^9.0.0 || ^10.0.0",
-        "illuminate/support": "^9.0.0 || ^10.0.0",
-        "rinvex/laravel-support": "^6.0.0",
-        "spatie/eloquent-sortable": "^4.0.0",
-        "spatie/laravel-sluggable": "^3.4.2",
-        "spatie/laravel-translatable": "^6.5.0"
-    },
-    "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.31.0",
-        "illuminate/container": "^9.0.0 || ^10.0.0",
-        "phpunit/phpunit": "^9.5.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Rinvex\\Subscriptions\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Rinvex\\Subscriptions\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit"
-    },
-    "config": {
-        "sort-packages": true,
-        "preferred-install": "dist",
-        "optimize-autoloader": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Rinvex\\Subscriptions\\Providers\\SubscriptionsServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    {
+      "name": "The Generous Laravel Community",
+      "homepage": "https://github.com/laravelcm/laravel-subscriptions/contributors"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "illuminate/console": "^9.0.0 || ^10.0.0",
+    "illuminate/database": "^9.0.0 || ^10.0.0",
+    "illuminate/support": "^9.0.0 || ^10.0.0",
+    "rinvex/laravel-support": "^6.0.0",
+    "spatie/eloquent-sortable": "^4.0.0",
+    "spatie/laravel-package-tools": "^1.16",
+    "spatie/laravel-sluggable": "^3.4.2",
+    "spatie/laravel-translatable": "^6.5.0"
+  },
+  "require-dev": {
+    "codedungeon/phpunit-result-printer": "^0.31.0",
+    "illuminate/container": "^9.0.0 || ^10.0.0",
+    "laravel/pint": "^1.13",
+    "nunomaduro/larastan": "^2.0",
+    "pestphp/pest": "^2.18"
+  },
+  "autoload": {
+    "psr-4": {
+      "Laravelcm\\Subscriptions\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Laravelcm\\Subscriptions\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "pest": "./vendor/bin/pest",
+    "pint": "./vendor/bin/pint",
+    "stan": "./vendor/bin/phpstan analyse --memory-limit=2g"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": false
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SubscriptionServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
