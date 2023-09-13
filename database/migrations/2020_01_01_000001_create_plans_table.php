@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
-class CreatePlansTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+return new class () extends Migration {
     public function up(): void
     {
-        Schema::create(config('rinvex.subscriptions.tables.plans'), function (Blueprint $table) {
-            // Columns
-            $table->increments('id');
-            $table->string('slug');
+        Schema::create(config('laravel-subscriptions.tables.plans'), function (Blueprint $table): void {
+            $table->id();
+
+            $table->string('slug')->unique();
             $table->json('name');
             $table->json('description')->nullable();
             $table->boolean('is_active')->default(true);
@@ -35,21 +30,15 @@ class CreatePlansTable extends Migration
             $table->tinyInteger('prorate_extend_due')->unsigned()->nullable();
             $table->smallInteger('active_subscribers_limit')->unsigned()->nullable();
             $table->mediumInteger('sort_order')->unsigned()->default(0);
+
             $table->timestamps();
             $table->softDeletes();
-
-            // Indexes
-            $table->unique('slug');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down(): void
     {
-        Schema::dropIfExists(config('rinvex.subscriptions.tables.plans'));
+        Schema::dropIfExists(config('laravel-subscriptions.tables.plans'));
     }
-}
+};

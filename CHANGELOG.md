@@ -1,9 +1,8 @@
-# Rinvex Subscriptions Change Log
+# Laravel Subscriptions Change Log
 
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
-
 
 ## [v6.1.0] - 2022-02-14
 - Update composer dependencies to Laravel v9
