@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Rinvex\Support\Traits\ValidatingTrait;
 
 /**
  * Laravelcm\Subscriptions\Models\SubscriptionUsage.
@@ -41,7 +40,6 @@ final class SubscriptionUsage extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use ValidatingTrait;
 
     protected $fillable = [
         'subscription_id',
@@ -58,37 +56,9 @@ final class SubscriptionUsage extends Model
         'deleted_at' => 'datetime',
     ];
 
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
-
-    /**
-     * The default rules that the model will validate against.
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * Whether the model should throw a
-     * ValidationException if it fails validation.
-     *
-     * @var bool
-     */
-    protected $throwValidationExceptions = true;
-
-    public function __construct(array $attributes = [])
+    public function getTable(): string
     {
-        $this->setTable(config('laravel-subscriptions.tables.subscription_usage'));
-        $this->mergeRules([
-            'subscription_id' => 'required|integer|exists:'.config('laravel-subscriptions.tables.subscriptions').',id',
-            'feature_id' => 'required|integer|exists:'.config('laravel-subscriptions.tables.features').',id',
-            'used' => 'required|integer',
-            'valid_until' => 'nullable|date',
-        ]);
-
-        parent::__construct($attributes);
+        return config('laravel-subscriptions.tables.subscription_usage');
     }
 
     public function feature(): BelongsTo
@@ -103,14 +73,15 @@ final class SubscriptionUsage extends Model
 
     public function scopeByFeatureSlug(Builder $builder, string $featureSlug): Builder
     {
-        $feature = app('laravel-subscriptions.models.feature')->where('slug', $featureSlug)->first();
+        $model = config('laravel-subscriptions.models.feature', Feature::class);
+        $feature = tap(new $model())->where('slug', $featureSlug)->first();
 
         return $builder->where('feature_id', $feature ? $feature->getKey() : null);
     }
 
     public function expired(): bool
     {
-        if (null === $this->valid_until) {
+        if ( ! $this->valid_until) {
             return false;
         }
 

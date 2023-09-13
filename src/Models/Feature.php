@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace Laravelcm\Subscriptions\Models;
 
 use Carbon\Carbon;
-use Spatie\Sluggable\SlugOptions;
-use Rinvex\Support\Traits\HasSlug;
-use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
-use Laravelcm\Subscriptions\Services\Period;
-use Rinvex\Support\Traits\HasTranslations;
-use Rinvex\Support\Traits\ValidatingTrait;
-use Spatie\EloquentSortable\SortableTrait;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravelcm\Subscriptions\Traits\BelongsToPlan;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravelcm\Subscriptions\Traits\HasSlug;
+use Laravelcm\Subscriptions\Traits\HasTranslations;
+use Laravelcm\Subscriptions\Services\Period;
+use Laravelcm\Subscriptions\Traits\BelongsToPlan;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Laravelcm\Subscriptions\Models\PlanFeature.
@@ -59,7 +58,6 @@ final class Feature extends Model implements Sortable
     use HasTranslations;
     use SoftDeletes;
     use SortableTrait;
-    use ValidatingTrait;
 
     protected $fillable = [
         'plan_id',
@@ -82,11 +80,6 @@ final class Feature extends Model implements Sortable
         'deleted_at' => 'datetime',
     ];
 
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
-
     /**
      * The attributes that are translatable.
      *
@@ -97,45 +90,13 @@ final class Feature extends Model implements Sortable
         'description',
     ];
 
-    /**
-     * The sortable settings.
-     *
-     * @var array
-     */
-    public $sortable = [
+    public array $sortable = [
         'order_column_name' => 'sort_order',
     ];
 
-    /**
-     * The default rules that the model will validate against.
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * Whether the model should throw a
-     * ValidationException if it fails validation.
-     *
-     * @var bool
-     */
-    protected $throwValidationExceptions = true;
-
-    public function __construct(array $attributes = [])
+    public function getTable(): string
     {
-        $this->setTable(config('laravel-subscriptions.tables.features'));
-        $this->mergeRules([
-            'plan_id' => 'required|integer|exists:'.config('laravel-subscriptions.tables.plans').',id',
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('laravel-subscriptions.tables.features').',slug',
-            'name' => 'required|string|strip_tags|max:150',
-            'description' => 'nullable|string|max:32768',
-            'value' => 'required|string',
-            'resettable_period' => 'sometimes|integer',
-            'resettable_interval' => 'sometimes|in:hour,day,week,month',
-            'sort_order' => 'nullable|integer|max:100000',
-        ]);
-
-        parent::__construct($attributes);
+        return config('laravel-subscriptions.tables.features');
     }
 
     protected static function boot(): void

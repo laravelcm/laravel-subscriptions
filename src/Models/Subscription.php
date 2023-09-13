@@ -14,10 +14,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
 use Laravelcm\Subscriptions\Traits\BelongsToPlan;
 use Laravelcm\Subscriptions\Services\Period;
+use Laravelcm\Subscriptions\Traits\HasSlug;
+use Laravelcm\Subscriptions\Traits\HasTranslations;
 use LogicException;
-use Rinvex\Support\Traits\HasSlug;
-use Rinvex\Support\Traits\HasTranslations;
-use Rinvex\Support\Traits\ValidatingTrait;
 use Spatie\Sluggable\SlugOptions;
 
 /**
@@ -71,7 +70,6 @@ final class Subscription extends Model
     use HasSlug;
     use HasTranslations;
     use SoftDeletes;
-    use ValidatingTrait;
 
     protected $fillable = [
         'subscriber_id',
@@ -100,11 +98,6 @@ final class Subscription extends Model
         'deleted_at' => 'datetime',
     ];
 
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
-
     /**
      * The attributes that are translatable.
      *
@@ -115,46 +108,16 @@ final class Subscription extends Model
         'description',
     ];
 
-    /**
-     * The default rules that the model will validate against.
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * Whether the model should throw a
-     * ValidationException if it fails validation.
-     *
-     * @var bool
-     */
-    protected $throwValidationExceptions = true;
-
-    public function __construct(array $attributes = [])
+    public function getTable(): string
     {
-        $this->setTable(config('laravel-subscriptions.tables.subscriptions'));
-        $this->mergeRules([
-            'name' => 'required|string|strip_tags|max:150',
-            'description' => 'nullable|string|max:32768',
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('laravel-subscriptions.tables.subscriptions').',slug',
-            'plan_id' => 'required|integer|exists:'.config('laravel-subscriptions.tables.plans').',id',
-            'subscriber_id' => 'required|integer',
-            'subscriber_type' => 'required|string|strip_tags|max:150',
-            'trial_ends_at' => 'nullable|date',
-            'starts_at' => 'required|date',
-            'ends_at' => 'required|date',
-            'cancels_at' => 'nullable|date',
-            'canceled_at' => 'nullable|date',
-        ]);
-
-        parent::__construct($attributes);
+        return config('laravel-subscriptions.tables.subscriptions');
     }
 
     protected static function boot(): void
     {
         parent::boot();
 
-        static::validating(function (self $model): void {
+        static::creating(function (self $model): void {
             if ( ! $model->starts_at || ! $model->ends_at) {
                 $model->setNewPeriod();
             }

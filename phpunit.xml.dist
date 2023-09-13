@@ -1,44 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         beStrictAboutTestsThatDoNotTestAnything="true"
-         beStrictAboutChangesToGlobalState="true"
-         beStrictAboutCoversAnnotation="true"
-         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
+         backupStaticProperties="true">
     <testsuites>
-        <testsuite name="Rinvex Subscriptions Unit Test Suite">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Rinvex Subscriptions Feature Test Suite">
+        <testsuite name="Test Suite">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
-    <logging>
-        <log type="tap" target="build/report.tap" />
-        <log type="junit" target="build/report.junit.xml" />
-        <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true" />
-        <log type="coverage-text" target="build/coverage.txt" />
-        <log type="coverage-clover" target="build/logs/clover.xml" />
-    </logging>
+    <source>
+        <exclude>
+            <directory suffix=".php">src/</directory>
+        </exclude>
+    </source>
     <php>
-        <server name="APP_ENV" value="testing" />
-        <server name="CACHE_DRIVER" value="array" />
-        <server name="SESSION_DRIVER" value="array" />
-        <server name="QUEUE_CONNECTION" value="sync" />
-        <server name="DB_CONNECTION" value="sqlite" />
-        <server name="DB_DATABASE" value=":memory:" />
+        <server name="APP_ENV" value="testing"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <server name="SESSION_DRIVER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value=":memory:"/>
     </php>
 </phpunit>

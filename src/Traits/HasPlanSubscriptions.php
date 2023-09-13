@@ -13,18 +13,7 @@ use Laravelcm\Subscriptions\Services\Period;
 
 trait HasPlanSubscriptions
 {
-    /**
-     * Define a polymorphic one-to-many relationship.
-     *
-     * @param string $related
-     * @param string $name
-     * @param string|null $type
-     * @param string|null $id
-     * @param string|null $localKey
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    abstract public function morphMany(string $related, string $name, ?string $type = null, ?string $id = null, ?string $localKey = null): MorphMany;
+    abstract public function morphMany(string $related, string $name, ?string $type, ?string $id, ?string $localKey = null): MorphMany;
 
     protected static function bootHasSubscriptions(): void
     {
@@ -40,7 +29,12 @@ trait HasPlanSubscriptions
      */
     public function planSubscriptions(): MorphMany
     {
-        return $this->morphMany(config('laravel-subscriptions.models.subscription'), 'subscriber', 'subscriber_type', 'subscriber_id');
+        return $this->morphMany(
+            related: config('laravel-subscriptions.models.subscription'),
+            name: 'subscriber',
+            type: 'subscriber_type',
+            id: 'subscriber_id'
+        );
     }
 
     public function activePlanSubscriptions(): Collection
@@ -48,23 +42,11 @@ trait HasPlanSubscriptions
         return $this->planSubscriptions->reject->inactive();
     }
 
-    /**
-     * Get a plan subscription by slug.
-     *
-     * @param string $subscriptionSlug
-     *
-     * @return \Laravelcm\Subscriptions\Models\Subscription|null
-     */
     public function planSubscription(string $subscriptionSlug): ?Subscription
     {
         return $this->planSubscriptions()->where('slug', $subscriptionSlug)->first();
     }
 
-    /**
-     * Get subscribed plans.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function subscribedPlans(): Collection
     {
         $planIds = $this->planSubscriptions->reject
@@ -75,13 +57,6 @@ trait HasPlanSubscriptions
         return app('laravelcm.subscriptions.models.plan')->whereIn('id', $planIds)->get();
     }
 
-    /**
-     * Check if the subscriber subscribed to the given plan.
-     *
-     * @param int $planId
-     *
-     * @return bool
-     */
     public function subscribedTo(int $planId): bool
     {
         $subscription = $this->planSubscriptions()
@@ -91,15 +66,6 @@ trait HasPlanSubscriptions
         return $subscription && $subscription->active();
     }
 
-    /**
-     * Subscribe subscriber to a new plan.
-     *
-     * @param string $subscription
-     * @param \Laravelcm\Subscriptions\Models\Plan $plan
-     * @param \Carbon\Carbon|null $startDate
-     *
-     * @return \Laravelcm\Subscriptions\Models\Subscription
-     */
     public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
     {
         $trial = new Period($plan->trial_interval, $plan->trial_period, $startDate ?? Carbon::now());
