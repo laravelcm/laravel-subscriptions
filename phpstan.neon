@@ -3,7 +3,7 @@ includes:
 
 parameters:
 
-  level: 7
+  level: 0
 
   paths:
     - src

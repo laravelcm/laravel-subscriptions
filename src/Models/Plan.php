@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Laravelcm\Subscriptions\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Rinvex\Support\Traits\ValidatingTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Rinvex\Support\Traits\HasTranslations;
-use Rinvex\Support\Traits\HasSlug;
+use Laravelcm\Subscriptions\Traits\HasSlug;
+use Laravelcm\Subscriptions\Traits\HasTranslations;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\EloquentSortable\Sortable;
@@ -74,7 +73,6 @@ final class Plan extends Model implements Sortable
     use HasTranslations;
     use SoftDeletes;
     use SortableTrait;
-    use ValidatingTrait;
 
     protected $fillable = [
         'slug',
@@ -117,11 +115,6 @@ final class Plan extends Model implements Sortable
         'deleted_at' => 'datetime',
     ];
 
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
-
     /**
      * The attributes that are translatable.
      *
@@ -132,55 +125,13 @@ final class Plan extends Model implements Sortable
         'description',
     ];
 
-    /**
-     * The sortable settings.
-     *
-     * @var array
-     */
-    public $sortable = [
+    public array $sortable = [
         'order_column_name' => 'sort_order',
     ];
 
-    /**
-     * The default rules that the model will validate against.
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * Whether the model should throw a
-     * ValidationException if it fails validation.
-     *
-     * @var bool
-     */
-    protected $throwValidationExceptions = true;
-
-    public function __construct(array $attributes = [])
+    public function getTable(): string
     {
-        $this->setTable(config('laravel-subscriptions.tables.plans'));
-        $this->mergeRules([
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('laravel-subscriptions.tables.plans').',slug',
-            'name' => 'required|string|strip_tags|max:150',
-            'description' => 'nullable|string|max:32768',
-            'is_active' => 'sometimes|boolean',
-            'price' => 'required|numeric',
-            'signup_fee' => 'required|numeric',
-            'currency' => 'required|alpha|size:3',
-            'trial_period' => 'sometimes|integer|max:100000',
-            'trial_interval' => 'sometimes|in:hour,day,week,month',
-            'invoice_period' => 'sometimes|integer|max:100000',
-            'invoice_interval' => 'sometimes|in:hour,day,week,month',
-            'grace_period' => 'sometimes|integer|max:100000',
-            'grace_interval' => 'sometimes|in:hour,day,week,month',
-            'sort_order' => 'nullable|integer|max:100000',
-            'prorate_day' => 'nullable|integer|max:150',
-            'prorate_period' => 'nullable|integer|max:150',
-            'prorate_extend_due' => 'nullable|integer|max:150',
-            'active_subscribers_limit' => 'nullable|integer|max:100000',
-        ]);
-
-        parent::__construct($attributes);
+        return config('laravel-subscriptions.tables.plans');
     }
 
     protected static function boot(): void
@@ -226,13 +177,6 @@ final class Plan extends Model implements Sortable
         return $this->grace_period && $this->grace_interval;
     }
 
-    /**
-     * Get plan feature by the given slug.
-     *
-     * @param string $featureSlug
-     *
-     * @return \Laravelcm\Subscriptions\Models\Feature|null
-     */
     public function getFeatureBySlug(string $featureSlug): ?Feature
     {
         return $this->features()->where('slug', $featureSlug)->first();
