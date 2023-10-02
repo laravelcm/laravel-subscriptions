@@ -57,25 +57,29 @@ That's it, we only have to use that trait in our User model! Now your users may 
 ### Create a Plan
 
 ```php
-$plan = app('rinvex.subscriptions.plan')->create([
+use Laravelcm\Subscriptions\Models\Plan;
+use Laravelcm\Subscriptions\Models\Feature;
+use Laravelcm\Subscriptions\Interval;
+
+$plan = Plan::create([
     'name' => 'Pro',
     'description' => 'Pro plan',
     'price' => 9.99,
     'signup_fee' => 1.99,
     'invoice_period' => 1,
-    'invoice_interval' => 'month',
+    'invoice_interval' => Interval::MONTH->value,
     'trial_period' => 15,
-    'trial_interval' => 'day',
+    'trial_interval' => Interval::DAY->value,
     'sort_order' => 1,
     'currency' => 'USD',
 ]);
 
 // Create multiple plan features at once
 $plan->features()->saveMany([
-    new PlanFeature(['name' => 'listings', 'value' => 50, 'sort_order' => 1]),
-    new PlanFeature(['name' => 'pictures_per_listing', 'value' => 10, 'sort_order' => 5]),
-    new PlanFeature(['name' => 'listing_duration_days', 'value' => 30, 'sort_order' => 10, 'resettable_period' => 1, 'resettable_interval' => 'month']),
-    new PlanFeature(['name' => 'listing_title_bold', 'value' => 'Y', 'sort_order' => 15])
+    new Feature(['name' => 'listings', 'value' => 50, 'sort_order' => 1]),
+    new Feature(['name' => 'pictures_per_listing', 'value' => 10, 'sort_order' => 5]),
+    new Feature(['name' => 'listing_duration_days', 'value' => 30, 'sort_order' => 10, 'resettable_period' => 1, 'resettable_interval' => 'month']),
+    new Feature(['name' => 'listing_title_bold', 'value' => 'Y', 'sort_order' => 15])
 ]);
 ```
 
@@ -84,7 +88,9 @@ $plan->features()->saveMany([
 You can query the plan for further details, using the intuitive API as follows:
 
 ```php
-$plan = app('rinvex.subscriptions.plan')->find(1);
+use Laravelcm\Subscriptions\Models\Plan;
+
+$plan = Plan::find(1);
 
 // Get all plan features                
 $plan->features;
@@ -109,14 +115,17 @@ Both `$plan->features` and `$plan->planSubscriptions` are collections, driven fr
 Say you want to show the value of the feature _pictures_per_listing_ from above. You can do so in many ways:
 
 ```php
+use Laravelcm\Subscriptions\Models\Feature;
+use Laravelcm\Subscriptions\Models\Subscription;
+
 // Use the plan instance to get feature's value
 $amountOfPictures = $plan->getFeatureBySlug('pictures_per_listing')->value;
 
 // Query the feature itself directly
-$amountOfPictures = app('rinvex.subscriptions.plan_feature')->where('slug', 'pictures_per_listing')->first()->value;
+$amountOfPictures = Feature::where('slug', 'pictures_per_listing')->first()->value;
 
 // Get feature value through the subscription instance
-$amountOfPictures = app('rinvex.subscriptions.plan_subscription')->find(1)->getFeatureValue('pictures_per_listing');
+$amountOfPictures = Subscription::find(1)->getFeatureValue('pictures_per_listing');
 ```
 
 ### Create a Subscription
@@ -124,8 +133,11 @@ $amountOfPictures = app('rinvex.subscriptions.plan_subscription')->find(1)->getF
 You can subscribe a user to a plan by using the `newSubscription()` function available in the `HasPlanSubscriptions` trait. First, retrieve an instance of your subscriber model, which typically will be your user model and an instance of the plan your user is subscribing to. Once you have retrieved the model instance, you may use the `newSubscription` method to create the model's subscription.
 
 ```php
+use Laravelcm\Subscriptions\Models\Plan;
+use App\Models\User;
+
 $user = User::find(1);
-$plan = app('rinvex.subscriptions.plan')->find(1);
+$plan = Plan::find(1);
 
 $user->newPlanSubscription('main', $plan);
 ```
@@ -137,8 +149,11 @@ The first argument passed to `newSubscription` method should be the title of the
 You can change subscription plan easily as follows:
 
 ```php
-$plan = app('rinvex.subscriptions.plan')->find(2);
-$subscription = app('rinvex.subscriptions.plan_subscription')->find(1);
+use Laravelcm\Subscriptions\Models\Plan;
+use Laravelcm\Subscriptions\Models\Subscription;
+
+$plan = Plan::find(2);
+$subscription = Subscription::find(1);
 
 // Change subscription plan
 $subscription->changePlan($plan);
@@ -151,8 +166,10 @@ If both plans (current and new plan) have the same billing frequency (e.g., `inv
 Plan features are great for fine-tuning subscriptions, you can top-up certain feature for X times of usage, so users may then use it only for that amount. Features also have the ability to be resettable and then it's usage could be expired too. See the following examples:
 
 ```php
+use Laravelcm\Subscriptions\Models\Feature;
+
 // Find plan feature
-$feature = app('rinvex.subscriptions.plan_feature')->where('name', 'listing_duration_days')->first();
+$feature = Feature::where('name', 'listing_duration_days')->first();
 
 // Get feature reset date
 $feature->getResetDate(new \Carbon\Carbon());
@@ -263,24 +280,27 @@ $user->planSubscription('main')->cancel(true);
 #### Subscription Model
 
 ```php
+use Laravelcm\Subscriptions\Models\Subscription;
+use App\Models\User;
+
 // Get subscriptions by plan
-$subscriptions = app('rinvex.subscriptions.plan_subscription')->byPlanId($plan_id)->get();
+$subscriptions = Subscription::byPlanId($plan_id)->get();
 
 // Get bookings of the given user
-$user = \App\Models\User::find(1);
-$bookingsOfSubscriber = app('rinvex.subscriptions.plan_subscription')->ofSubscriber($user)->get(); 
+$user = User::find(1);
+$bookingsOfSubscriber = Subscription::ofSubscriber($user)->get(); 
 
 // Get subscriptions with trial ending in 3 days
-$subscriptions = app('rinvex.subscriptions.plan_subscription')->findEndingTrial(3)->get();
+$subscriptions = Subscription::findEndingTrial(3)->get();
 
 // Get subscriptions with ended trial
-$subscriptions = app('rinvex.subscriptions.plan_subscription')->findEndedTrial()->get();
+$subscriptions = Subscription::findEndedTrial()->get();
 
 // Get subscriptions with period ending in 3 days
-$subscriptions = app('rinvex.subscriptions.plan_subscription')->findEndingPeriod(3)->get();
+$subscriptions = Subscription::findEndingPeriod(3)->get();
 
 // Get subscriptions with ended period
-$subscriptions = app('rinvex.subscriptions.plan_subscription')->findEndedPeriod()->get();
+$subscriptions = Subscription::findEndedPeriod()->get();
 ```
 
 ### Models

@@ -188,7 +188,7 @@ class Subscription extends Model
     {
         // If plans does not have the same billing frequency
         // (e.g., invoice_interval and invoice_period) we will update
-        // the billing dates starting today, and sice we are basically creating
+        // the billing dates starting today, and since we are basically creating
         // a new billing cycle, the usage data will be cleared.
         if ($this->plan->invoice_interval !== $plan->invoice_interval || $this->plan->invoice_period !== $plan->invoice_period) {
             $this->setNewPeriod($plan->invoice_interval, $plan->invoice_period);
@@ -321,7 +321,7 @@ class Subscription extends Model
      *
      * @return $this
      */
-    protected function setNewPeriod(string $invoice_interval = '', ?int $invoice_period = null, Carbon $start = null): self
+    protected function setNewPeriod(string $invoice_interval = '', int $invoice_period = null, Carbon $start = null): self
     {
         if (empty($invoice_interval)) {
             $invoice_interval = $this->plan->invoice_interval;
@@ -331,7 +331,11 @@ class Subscription extends Model
             $invoice_period = $this->plan->invoice_period;
         }
 
-        $period = new Period($invoice_interval, $invoice_period, $start ?? Carbon::now());
+        $period = new Period(
+            interval: $invoice_interval,
+            count: $invoice_period,
+            start: $start ?? Carbon::now()
+        );
 
         $this->starts_at = $period->getStartDate();
         $this->ends_at = $period->getEndDate();
@@ -350,7 +354,7 @@ class Subscription extends Model
 
         if ($feature->resettable_period) {
             // Set expiration date when the usage record is new or doesn't have one.
-            if (null === $usage->valid_until) {
+            if ($usage->valid_until === null) {
                 // Set date from subscription creation date so the reset
                 // period match the period specified by the subscription's plan.
                 $usage->valid_until = $feature->getResetDate($this->created_at);
@@ -362,7 +366,7 @@ class Subscription extends Model
             }
         }
 
-        $usage->used = ($incremental ? $usage->used + $uses : $uses);
+        $usage->used = $incremental ? $usage->used + $uses : $uses;
 
         $usage->save();
 
@@ -373,7 +377,7 @@ class Subscription extends Model
     {
         $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
 
-        if (null === $usage) {
+        if ($usage === null) {
             return null;
         }
 
@@ -396,13 +400,13 @@ class Subscription extends Model
         $featureValue = $this->getFeatureValue($featureSlug);
         $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
 
-        if ('true' === $featureValue) {
+        if ($featureValue === 'true') {
             return true;
         }
 
         // If the feature value is zero, let's return false since
         // there's no uses available. (useful to disable countable features)
-        if ( ! $usage || $usage->expired() || null === $featureValue || '0' === $featureValue || 'false' === $featureValue) {
+        if ( ! $usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
             return false;
         }
 

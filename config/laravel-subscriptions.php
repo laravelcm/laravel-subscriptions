@@ -9,7 +9,14 @@ use Laravelcm\Subscriptions\Models\SubscriptionUsage;
 
 return [
 
-    // Subscriptions Database Tables
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Tables
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
     'tables' => [
         'plans' => 'plans',
         'features' => 'features',
@@ -17,7 +24,17 @@ return [
         'subscription_usage' => 'subscription_usage',
     ],
 
-    // Subscriptions Models
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Models
+    |--------------------------------------------------------------------------
+    |
+    | Models used to manage subscriptions. You can replace to use your own models,
+    | but make sure that you have the same functionalities or that your models
+    | extend from each model that you are going to replace.
+    |
+    */
+
     'models' => [
         'plan' => Plan::class,
         'feature' => Feature::class,
