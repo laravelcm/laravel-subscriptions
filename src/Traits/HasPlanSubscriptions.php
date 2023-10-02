@@ -52,7 +52,7 @@ trait HasPlanSubscriptions
             ->pluck('plan_id')
             ->unique();
 
-        return app('laravelcm.subscriptions.models.plan')->whereIn('id', $planIds)->get();
+        return tap(new (config('laravel-subscriptions.models.plan')))->whereIn('id', $planIds)->get();
     }
 
     public function subscribedTo(int $planId): bool
@@ -66,8 +66,16 @@ trait HasPlanSubscriptions
 
     public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
     {
-        $trial = new Period($plan->trial_interval, $plan->trial_period, $startDate ?? Carbon::now());
-        $period = new Period($plan->invoice_interval, $plan->invoice_period, $trial->getEndDate());
+        $trial = new Period(
+            interval: $plan->trial_interval,
+            count: $plan->trial_period,
+            start: $startDate ?? Carbon::now()
+        );
+        $period = new Period(
+            interval: $plan->invoice_interval,
+            count: $plan->invoice_period,
+            start: $trial->getEndDate()
+        );
 
         return $this->planSubscriptions()->create([
             'name' => $subscription,
