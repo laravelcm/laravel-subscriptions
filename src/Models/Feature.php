@@ -50,7 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereValue($value)
  */
-final class Feature extends Model implements Sortable
+class Feature extends Model implements Sortable
 {
     use BelongsToPlan;
     use HasFactory;

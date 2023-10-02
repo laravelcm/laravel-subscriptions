@@ -66,7 +66,7 @@ use Spatie\EloquentSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereTrialPeriod($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereUpdatedAt($value)
  */
-final class Plan extends Model implements Sortable
+class Plan extends Model implements Sortable
 {
     use HasFactory;
     use HasSlug;

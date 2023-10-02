@@ -63,7 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereSubscriberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereSubscriberType($value)
  */
-final class Subscription extends Model
+class Subscription extends Model
 {
     use BelongsToPlan;
     use HasFactory;

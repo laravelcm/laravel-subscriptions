@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereValidUntil($value)
  *
  */
-final class SubscriptionUsage extends Model
+class SubscriptionUsage extends Model
 {
     use HasFactory;
     use SoftDeletes;
