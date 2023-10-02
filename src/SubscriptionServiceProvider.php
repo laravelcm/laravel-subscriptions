@@ -12,7 +12,7 @@ final class SubscriptionServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name('laravel-subscriptions')
-            ->hasConfigFile();
+            ->hasConfigFile('laravel-subscriptions');
     }
 
     public function bootingPackage(): void
