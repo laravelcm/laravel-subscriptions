@@ -12,7 +12,6 @@
     "declare_parentheses": true,
     "declare_strict_types": true,
     "explicit_string_variable": true,
-    "final_class": true,
     "final_internal_class": false,
     "fully_qualified_strict_types": true,
     "global_namespace_import": {
