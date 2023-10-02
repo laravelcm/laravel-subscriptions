@@ -14,8 +14,8 @@ return new class () extends Migration {
             $table->id();
 
             $table->foreignIdFor(Plan::class);
-            $table->string('slug')->unique();
             $table->json('name');
+            $table->string('slug')->unique();
             $table->json('description')->nullable();
             $table->string('value');
             $table->unsignedSmallInteger('resettable_period')->default(0);

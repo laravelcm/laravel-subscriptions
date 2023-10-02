@@ -15,8 +15,8 @@ return new class () extends Migration {
 
             $table->morphs('subscriber');
             $table->foreignIdFor(Plan::class);
-            $table->string('slug')->unique();
             $table->json('name');
+            $table->string('slug')->unique();
             $table->json('description')->nullable();
             $table->string('timezone')->nullable();
 

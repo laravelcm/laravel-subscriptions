@@ -12,24 +12,24 @@ return new class () extends Migration {
         Schema::create(config('laravel-subscriptions.tables.plans'), function (Blueprint $table): void {
             $table->id();
 
-            $table->string('slug')->unique();
             $table->json('name');
+            $table->string('slug')->unique();
             $table->json('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->decimal('price')->default('0.00');
             $table->decimal('signup_fee')->default('0.00');
             $table->string('currency', 3);
-            $table->smallInteger('trial_period')->unsigned()->default(0);
+            $table->unsignedSmallInteger('trial_period')->default(0);
             $table->string('trial_interval')->default('day');
-            $table->smallInteger('invoice_period')->unsigned()->default(0);
+            $table->unsignedSmallInteger('invoice_period')->default(0);
             $table->string('invoice_interval')->default('month');
-            $table->smallInteger('grace_period')->unsigned()->default(0);
+            $table->unsignedSmallInteger('grace_period')->default(0);
             $table->string('grace_interval')->default('day');
-            $table->tinyInteger('prorate_day')->unsigned()->nullable();
-            $table->tinyInteger('prorate_period')->unsigned()->nullable();
-            $table->tinyInteger('prorate_extend_due')->unsigned()->nullable();
-            $table->smallInteger('active_subscribers_limit')->unsigned()->nullable();
-            $table->mediumInteger('sort_order')->unsigned()->default(0);
+            $table->unsignedTinyInteger('prorate_day')->nullable();
+            $table->unsignedTinyInteger('prorate_period')->nullable();
+            $table->unsignedTinyInteger('prorate_extend_due')->nullable();
+            $table->unsignedSmallInteger('active_subscribers_limit')->nullable();
+            $table->unsignedSmallInteger('sort_order')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

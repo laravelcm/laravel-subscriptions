@@ -21,7 +21,7 @@ use Spatie\EloquentSortable\Sortable;
  * @property string $slug
  * @property array $name
  * @property array $description
- * @property bool$is_active
+ * @property bool $is_active
  * @property float $price
  * @property float $signup_fee
  * @property string $currency
@@ -39,7 +39,7 @@ use Spatie\EloquentSortable\Sortable;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\Feature[]      $features
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\Feature[] $features
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\Subscription[] $subscriptions
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan ordered($direction = 'asc')
