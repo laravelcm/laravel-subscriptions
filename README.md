@@ -3,9 +3,6 @@
 **Laravel Subscriptions** is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
 
 [![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-subscriptions.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-subscriptions)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/laravel-subscriptions.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/laravel-subscriptions/)
-[![Travis](https://img.shields.io/travis/rinvex/laravel-subscriptions.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/laravel-subscriptions)
-[![StyleCI](https://styleci.io/repos/93313402/shield)](https://styleci.io/repos/93313402)
 [![License](https://img.shields.io/packagist/l/rinvex/laravel-subscriptions.svg?label=License&style=flat-square)](https://github.com/rinvex/laravel-subscriptions/blob/develop/LICENSE)
 
 
@@ -24,7 +21,7 @@
 
 2. Publish resources (migrations and config files):
     ```shell
-    php artisan publish:subscriptions
+    php artisan publish:laravel-subscriptions
     ```
 
 3. Execute migrations via the following command:
@@ -288,27 +285,14 @@ $subscriptions = app('rinvex.subscriptions.plan_subscription')->findEndedPeriod(
 
 ### Models
 
-**Rinvex Subscriptions** uses 4 models:
+**Laravel Subscriptions** uses 4 models:
 
 ```php
-Rinvex\Subscriptions\Models\Plan;
-Rinvex\Subscriptions\Models\PlanFeature;
-Rinvex\Subscriptions\Models\PlanSubscription;
-Rinvex\Subscriptions\Models\PlanSubscriptionUsage;
+Laravelcm\Subscriptions\Models\Plan;
+Laravelcm\Subscriptions\Models\Feature;
+Laravelcm\Subscriptions\Models\Subscription;
+Laravelcm\Subscriptions\Models\SubscriptionUsage;
 ```
-
-
-## Roadmap
-
-**Looking for contributors!**
-
-The following are a set of limitations to be improved, or feature requests that's looking for contributors to implement, all PRs are welcome 🙂
-
-- [ ] Allow paying for multiple occurrences of the same plan (i.e. monthly plan, user can pay for 6 months of that plan) (#64)
-- [ ] Plan prorate fields in database isn't utilized, this should be implemented to consolidate extension dates, and prices (#68)
-- [ ] Change *features* to be in a many-to-many relationship with plans. Multiple plans can have the same feature, and many plans can have many features as well (#101)
-- [ ] Plan subscription timezone field in database isn't utilized, this should be implemented to respect timezone on date calculations (i.e. starts_at, ends_at, trial_ends_at) (#78)
-- [ ] Separate trial feature from the subscription periods and adjust subscriptions accordingly. Users should be able to have a trial period without having a subscription at all (#67)
 
 ## Changelog
 
@@ -319,9 +303,9 @@ Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
 
 The following support channels are available at your fingertips:
 
-- [Chat on Slack](https://bit.ly/rinvex-slack)
-- [Help on Email](mailto:help@rinvex.com)
-- [Follow on Twitter](https://twitter.com/rinvex)
+- [Chat on Telegram](https://laravel.cm/telegram)
+- [Help on Email](mailto:developers@laravel.cm)
+- [Follow on Twitter](https://twitter.com/laravelcm)
 
 
 ## Contributing & Protocols
@@ -339,16 +323,16 @@ Bug reports, feature requests, and pull requests are very welcome.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please send an e-mail to [help@rinvex.com](help@rinvex.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an e-mail to [developers@laravel.cm](help@rinvex.com). All security vulnerabilities will be promptly addressed.
 
 
-## About Rinvex
+## About Laravel Cameroon
 
-Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016. We believe that our drive The Value, The Reach, and The Impact is what differentiates us and unleash the endless possibilities of our philosophy through the power of software. We like to call it Innovation At The Speed Of Life. That’s how we do our share of advancing humanity.
+The community of PHP and Laravel developers in Cameroon, the largest gathering of developers in Cameroon.
 
 
 ## License
 
 This software is released under [The MIT License (MIT)](LICENSE).
 
-(c) 2016-2022 Rinvex LLC, Some rights reserved.
+(c) 2018-2023 Laravel Cameroun, Some rights reserved.
