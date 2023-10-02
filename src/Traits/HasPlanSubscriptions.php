@@ -13,8 +13,6 @@ use Laravelcm\Subscriptions\Services\Period;
 
 trait HasPlanSubscriptions
 {
-    abstract public function morphMany(string $related, string $name, ?string $type, ?string $id, ?string $localKey = null): MorphMany;
-
     protected static function bootHasSubscriptions(): void
     {
         static::deleted(function ($plan): void {
