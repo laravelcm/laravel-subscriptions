@@ -74,7 +74,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "SubscriptionServiceProvider"
+        "Laravelcm\\Subscriptions\\SubscriptionServiceProvider"
       ]
     }
   },
