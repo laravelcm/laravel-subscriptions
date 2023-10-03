@@ -21,4 +21,11 @@ final class SubscriptionServiceProvider extends PackageServiceProvider
                     ->askToStarRepoOnGitHub('laravelcm/laravel-subscriptions');
             });
     }
+
+    public function bootingPackage(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
+    }
 }
