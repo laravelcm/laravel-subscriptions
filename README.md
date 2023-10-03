@@ -1,10 +1,32 @@
+<p align="center">
+    <img src="https://github.com/laravelcm/laravel.cm/raw/main/art/logo.svg" height="250" />
+</p>
+
+<p align="center">
+    <a href="https://laravel.com">
+        <img alt="Laravel v10.x" src="https://img.shields.io/badge/Laravel-v10.x-FF2D20">
+    </a>
+    <a href="https://github.com/laravelcm/laravel-subscriptions/actions">
+        <img src="https://github.com/laravelcm/laravel-subscriptions/workflows/Tests/badge.svg" alt="Build Status" />
+    </a>
+    <a href="https://github.com/laravelcm/laravel-subscriptions/actions/workflows/pint.yml">
+        <img src="https://github.com/laravelcm/laravel-subscriptions/actions/workflows/pint.yml/badge.svg" alt="Coding Standards" />
+    </a>
+    <a href="https://packagist.org/packages/laravelcm/laravel-subscriptions">
+        <img src="https://img.shields.io/packagist/dt/laravelcm/laravel-subscriptions" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/laravelcm/laravel-subscriptions">
+        <img src="https://img.shields.io/packagist/v/laravelcm/laravel-subscriptions.svg?label=Packagist" alt="Packagist" />
+    </a>
+    <a href="https://github.com/laravelcm/laravel-subscriptions/blob/main/LICENSE">
+        <img src="https://img.shields.io/packagist/l/laravelcm/laravel-subscriptions.svg?label=License" alt="Packagist" />
+    </a>
+</p>
+
 # Laravel Subscriptions
 
-**Laravel Subscriptions** is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
-
-[![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-subscriptions.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-subscriptions)
-[![License](https://img.shields.io/packagist/l/rinvex/laravel-subscriptions.svg?label=License&style=flat-square)](https://github.com/rinvex/laravel-subscriptions/blob/develop/LICENSE)
-
+**Laravel Subscriptions** is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. 
+It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
 
 ## Considerations
 
