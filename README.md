@@ -43,7 +43,7 @@ It's simple architecture, accompanied by powerful underlying to afford solid pla
 
 2. Publish resources (migrations and config files):
     ```shell
-    php artisan publish:laravel-subscriptions
+    php artisan vendor:publish --provider="Laravelcm\Subscriptions\SubscriptionServiceProvider"
     ```
 
 3. Execute migrations via the following command:
