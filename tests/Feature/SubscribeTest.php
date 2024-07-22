@@ -37,7 +37,7 @@ it('user can have a monthly active subscription plan', function (): void {
     expect($this->user->planSubscription('main')->active())
         ->toBeTrue()
         ->and($this->user->planSubscription('main')->ends_at->toDateString())
-        ->toBe(\Carbon\Carbon::now()->addMonth()->addDays($this->plan->trial_period)->toDateString());
+        ->toBe(Carbon\Carbon::now()->addMonth()->addDays($this->plan->trial_period)->toDateString());
 })->group('subscribe');
 
 it('user can change plan', function (): void {

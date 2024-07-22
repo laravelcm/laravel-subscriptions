@@ -23,7 +23,7 @@ trait HasPlanSubscriptions
     /**
      * The subscriber may have many plan subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function planSubscriptions(): MorphMany
     {

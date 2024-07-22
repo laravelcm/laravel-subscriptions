@@ -29,17 +29,17 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property array $title
  * @property array $description
- * @property \Carbon\Carbon|null $trial_ends_at
- * @property \Carbon\Carbon|null $starts_at
- * @property \Carbon\Carbon|null $ends_at
- * @property \Carbon\Carbon|null $cancels_at
- * @property \Carbon\Carbon|null $canceled_at
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Laravelcm\Subscriptions\Models\Plan $plan
+ * @property Carbon|null $trial_ends_at
+ * @property Carbon|null $starts_at
+ * @property Carbon|null $ends_at
+ * @property Carbon|null $cancels_at
+ * @property Carbon|null $canceled_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Plan $plan
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\SubscriptionUsage[] $usage
- * @property-read \Illuminate\Database\Eloquent\Model $subscriber
+ * @property-read Model $subscriber
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription byPlanId($planId)
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription findEndedPeriod()
@@ -141,7 +141,7 @@ class Subscription extends Model
         return $this->morphTo('subscriber', 'subscriber_type', 'subscriber_id', 'id');
     }
 
-    public function usage(): hasMany
+    public function usage(): HasMany
     {
         return $this->hasMany(config('laravel-subscriptions.models.subscription_usage'));
     }
@@ -233,10 +233,10 @@ class Subscription extends Model
     /**
      * Get bookings of the given subscriber.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param \Illuminate\Database\Eloquent\Model $subscriber
+     * @param Builder $builder
+     * @param Model $subscriber
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeOfSubscriber(Builder $builder, Model $subscriber): Builder
     {
@@ -247,10 +247,10 @@ class Subscription extends Model
     /**
      * Scope subscriptions with ending trial.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      * @param int $dayRange
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFindEndingTrial(Builder $builder, int $dayRange = 3): Builder
     {
@@ -263,9 +263,9 @@ class Subscription extends Model
     /**
      * Scope subscriptions with ended trial.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFindEndedTrial(Builder $builder): Builder
     {
@@ -275,10 +275,10 @@ class Subscription extends Model
     /**
      * Scope subscriptions with ending periods.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      * @param int $dayRange
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFindEndingPeriod(Builder $builder, int $dayRange = 3): Builder
     {
@@ -291,9 +291,9 @@ class Subscription extends Model
     /**
      * Scope subscriptions with ended periods.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFindEndedPeriod(Builder $builder): Builder
     {
@@ -303,9 +303,9 @@ class Subscription extends Model
     /**
      * Scope all active subscriptions for a user.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFindActive(Builder $builder): Builder
     {

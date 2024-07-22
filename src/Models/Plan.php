@@ -140,7 +140,7 @@ class Plan extends Model implements Sortable
 
         static::deleted(function (Plan $plan): void {
             $plan->features()->delete();
-            $plan->planSubscriptions()->delete();
+            $plan->subscriptions()->delete();
         });
     }
 
