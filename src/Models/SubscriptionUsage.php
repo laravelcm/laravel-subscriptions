@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $subscription_id
  * @property int $feature_id
  * @property int $used
- * @property \Carbon\Carbon|null $valid_until
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Laravelcm\Subscriptions\Models\Feature $feature
- * @property-read \Laravelcm\Subscriptions\Models\Subscription $subscription
+ * @property Carbon|null $valid_until
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Feature $feature
+ * @property-read Subscription $subscription
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage byFeatureSlug($featureSlug)
  * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereCreatedAt($value)
