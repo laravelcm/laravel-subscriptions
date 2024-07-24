@@ -6,12 +6,14 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravelcm\Subscriptions\SubscriptionServiceProvider;
+use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Models\User;
 
 abstract class TestCase extends BaseTestCase
 {
     use LazilyRefreshDatabase;
+    use WithWorkbench;
 
     protected function getPackageProviders($app): array
     {

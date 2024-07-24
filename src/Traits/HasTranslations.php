@@ -26,7 +26,7 @@ trait HasTranslations
     /**
      * @throws AttributeIsNotTranslatable
      */
-    public function getTranslations(string $key = null): array
+    public function getTranslations(?string $key = null): array
     {
         if ($key !== null) {
             $this->guardAgainstNonTranslatableAttribute($key);

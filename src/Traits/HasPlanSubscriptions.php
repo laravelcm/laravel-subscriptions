@@ -16,7 +16,7 @@ trait HasPlanSubscriptions
     protected static function bootHasSubscriptions(): void
     {
         static::deleted(function ($plan): void {
-            $plan->planSubscriptions()->delete();
+            $plan->subscriptions()->delete();
         });
     }
 
