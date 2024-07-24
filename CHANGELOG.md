@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.3.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.3...v1.3.1) - 2024-07-24
+
+### What's Changed
+
+* feat: Remove laravel 9 support and update github actions test by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/17
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.3...v1.3.1
+
 ## [v1.3](https://github.com/rinvex/laravel-subscriptions/compare/v6.1.0...v1.3) - 2024-07-24
 
 ### What's Changed
@@ -66,10 +74,13 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## [v4.1.0](https://github.com/rinvex/laravel-subscriptions/compare/v4.0.6...v4.1.0) - 2020-06-15
 
 - Update validation rules
+  
 - Drop using rinvex/laravel-cacheable from core packages for more flexibility
+  
   - Caching should be handled on the application layer, not enforced from the core packages
   
 - Drop PHP 7.2 & 7.3 support from travis
+  
 
 ## [v4.0.6](https://github.com/rinvex/laravel-subscriptions/compare/v4.0.5...v4.0.6) - 2020-05-30
 
