@@ -118,7 +118,7 @@ $plan = Plan::find(1);
 $plan->features;
 
 // Get all plan subscriptions
-$plan->planSubscriptions;
+$plan->subscriptions;
 
 // Check if the plan is free
 $plan->isFree();
@@ -130,7 +130,7 @@ $plan->hasTrial();
 $plan->hasGrace();
 ```
 
-Both `$plan->features` and `$plan->planSubscriptions` are collections, driven from relationships, and thus you can query these relations as any normal Eloquent relationship. E.g. `$plan->features()->where('name', 'listing_title_bold')->first()`.
+Both `$plan->features` and `$plan->subscriptions` are collections, driven from relationships, and thus you can query these relations as any normal Eloquent relationship. E.g. `$plan->features()->where('name', 'listing_title_bold')->first()`.
 
 ### Get Feature Value
 
@@ -181,7 +181,7 @@ $subscription = Subscription::find(1);
 $subscription->changePlan($plan);
 ```
 
-If both plans (current and new plan) have the same billing frequency (e.g., `invoice_period` and `invoice_interval`) the subscription will retain the same billing dates. If the plans don't have the same billing frequency, the subscription will have the new plan billing frequency, starting on the day of the change and _the subscription usage data will be cleared_. Also if the new plan has a trial period and it's a new subscription, the trial period will be applied.
+If both plans (current and new plan) have the same billing frequency (e.g., `invoice_period` and `invoice_interval`) the subscription will retain the same billing dates. If the plans don't have the same billing frequency, the subscription will have the new plan billing frequency, starting on the day of the change and _the subscription usage data will be cleared_. Also, if the new plan has a trial period, and it's a new subscription, the trial period will be applied.
 
 ### Feature Options
 

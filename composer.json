@@ -32,10 +32,10 @@
   ],
   "require": {
     "php": "^8.1",
-    "illuminate/console": "^9.0|^10.0",
-    "illuminate/container": "^9.0|^10.0",
-    "illuminate/database": "^9.0|^10.0",
-    "illuminate/support": "^9.0|^10.0",
+    "illuminate/console": "^9.52|^10.0|^11.0",
+    "illuminate/container": "^9.52|^10.0|^11.0",
+    "illuminate/database": "^9.52|^10.0|^11.0",
+    "illuminate/support": "^9.52|^10.0|^11.0",
     "spatie/eloquent-sortable": "^4.0.0",
     "spatie/laravel-package-tools": "^1.16",
     "spatie/laravel-sluggable": "^3.4.2",
@@ -43,8 +43,8 @@
   },
   "require-dev": {
     "laravel/pint": "^1.13",
-    "nunomaduro/larastan": "^2.0",
-    "orchestra/testbench": "^7.0|^8.0",
+    "larastan/larastan": "^2.0",
+    "orchestra/testbench": "^7.0|^8.0|^9.0",
     "pestphp/pest": "^2.18"
   },
   "autoload": {

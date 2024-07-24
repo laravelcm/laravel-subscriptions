@@ -138,7 +138,7 @@ class Plan extends Model implements Sortable
     {
         parent::boot();
 
-        static::deleted(function (Plan $plan): void {
+        static::deleted(function ($plan): void {
             $plan->features()->delete();
             $plan->subscriptions()->delete();
         });

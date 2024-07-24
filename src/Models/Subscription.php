@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Laravelcm\Subscriptions\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Laravelcm\Subscriptions\Traits\BelongsToPlan;
 use Laravelcm\Subscriptions\Services\Period;
+use Laravelcm\Subscriptions\Traits\BelongsToPlan;
 use Laravelcm\Subscriptions\Traits\HasSlug;
 use Laravelcm\Subscriptions\Traits\HasTranslations;
 use LogicException;
@@ -205,9 +205,9 @@ class Subscription extends Model
     /**
      * Renew subscription period.
      *
-     * @throws LogicException
-     *
      * @return $this
+     *
+     * @throws LogicException
      */
     public function renew(): self
     {
@@ -232,11 +232,6 @@ class Subscription extends Model
 
     /**
      * Get bookings of the given subscriber.
-     *
-     * @param Builder $builder
-     * @param Model $subscriber
-     *
-     * @return Builder
      */
     public function scopeOfSubscriber(Builder $builder, Model $subscriber): Builder
     {
@@ -246,11 +241,6 @@ class Subscription extends Model
 
     /**
      * Scope subscriptions with ending trial.
-     *
-     * @param Builder $builder
-     * @param int $dayRange
-     *
-     * @return Builder
      */
     public function scopeFindEndingTrial(Builder $builder, int $dayRange = 3): Builder
     {
@@ -262,10 +252,6 @@ class Subscription extends Model
 
     /**
      * Scope subscriptions with ended trial.
-     *
-     * @param Builder $builder
-     *
-     * @return Builder
      */
     public function scopeFindEndedTrial(Builder $builder): Builder
     {
@@ -274,11 +260,6 @@ class Subscription extends Model
 
     /**
      * Scope subscriptions with ending periods.
-     *
-     * @param Builder $builder
-     * @param int $dayRange
-     *
-     * @return Builder
      */
     public function scopeFindEndingPeriod(Builder $builder, int $dayRange = 3): Builder
     {
@@ -290,10 +271,6 @@ class Subscription extends Model
 
     /**
      * Scope subscriptions with ended periods.
-     *
-     * @param Builder $builder
-     *
-     * @return Builder
      */
     public function scopeFindEndedPeriod(Builder $builder): Builder
     {
@@ -302,10 +279,6 @@ class Subscription extends Model
 
     /**
      * Scope all active subscriptions for a user.
-     *
-     * @param Builder $builder
-     *
-     * @return Builder
      */
     public function scopeFindActive(Builder $builder): Builder
     {
@@ -315,13 +288,9 @@ class Subscription extends Model
     /**
      * Set new subscription period.
      *
-     * @param string $invoice_interval
-     * @param int|null $invoice_period
-     * @param Carbon|null $start
-     *
      * @return $this
      */
-    protected function setNewPeriod(string $invoice_interval = '', int $invoice_period = null, Carbon $start = null): self
+    protected function setNewPeriod(string $invoice_interval = '', ?int $invoice_period = null, ?Carbon $start = null): self
     {
         if (empty($invoice_interval)) {
             $invoice_interval = $this->plan->invoice_interval;
@@ -390,10 +359,6 @@ class Subscription extends Model
 
     /**
      * Determine if the feature can be used.
-     *
-     * @param string $featureSlug
-     *
-     * @return bool
      */
     public function canUseFeature(string $featureSlug): bool
     {
@@ -416,10 +381,6 @@ class Subscription extends Model
 
     /**
      * Get how many times the feature has been used.
-     *
-     * @param string $featureSlug
-     *
-     * @return int
      */
     public function getFeatureUsage(string $featureSlug): int
     {
@@ -430,10 +391,6 @@ class Subscription extends Model
 
     /**
      * Get the available uses.
-     *
-     * @param string $featureSlug
-     *
-     * @return int
      */
     public function getFeatureRemainings(string $featureSlug): int
     {
