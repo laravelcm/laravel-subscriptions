@@ -6,14 +6,12 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravelcm\Subscriptions\SubscriptionServiceProvider;
-use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Models\User;
 
 abstract class TestCase extends BaseTestCase
 {
     use LazilyRefreshDatabase;
-    use WithWorkbench;
 
     protected function getPackageProviders($app): array
     {
@@ -24,8 +22,10 @@ abstract class TestCase extends BaseTestCase
 
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadMigrationsFrom([
+            __DIR__.'/../database/migrations',
+            __DIR__.'/../../database/migrations',
+        ]);
     }
 
     protected function getEnvironmentSetUp($app): void
