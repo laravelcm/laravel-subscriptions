@@ -23,9 +23,7 @@ use Spatie\Sluggable\SlugOptions;
  * Laravelcm\Subscriptions\Models\Subscription.
  *
  * @property int $id
- * @property int $subscriber_id
  * @property string $subscriber_type
- * @property int $plan_id
  * @property string $slug
  * @property array $title
  * @property array $description
@@ -86,9 +84,7 @@ class Subscription extends Model
     ];
 
     protected $casts = [
-        'subscriber_id' => 'integer',
         'subscriber_type' => 'string',
-        'plan_id' => 'integer',
         'slug' => 'string',
         'trial_ends_at' => 'datetime',
         'starts_at' => 'datetime',
