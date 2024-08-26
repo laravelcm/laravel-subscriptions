@@ -21,7 +21,6 @@ use Spatie\Sluggable\SlugOptions;
  * Laravelcm\Subscriptions\Models\PlanFeature.
  *
  * @property int $id
- * @property int $plan_id
  * @property string $slug
  * @property array $title
  * @property array $description
@@ -71,7 +70,6 @@ class Feature extends Model implements Sortable
     ];
 
     protected $casts = [
-        'plan_id' => 'integer',
         'slug' => 'string',
         'value' => 'string',
         'resettable_period' => 'integer',
