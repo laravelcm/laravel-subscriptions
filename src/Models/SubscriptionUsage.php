@@ -74,7 +74,7 @@ class SubscriptionUsage extends Model
     public function scopeByFeatureSlug(Builder $builder, string $featureSlug): Builder
     {
         $model = config('laravel-subscriptions.models.feature', Feature::class);
-        $feature = tap(new $model())->where('slug', $featureSlug)->first();
+        $feature = (new $model())->where('slug', $featureSlug)->first();
 
         return $builder->where('feature_id', $feature ? $feature->getKey() : null);
     }
