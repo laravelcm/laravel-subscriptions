@@ -15,8 +15,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * Laravelcm\Subscriptions\Models\SubscriptionUsage.
  *
  * @property int $id
- * @property int $subscription_id
- * @property int $feature_id
  * @property int $used
  * @property Carbon|null $valid_until
  * @property Carbon|null $created_at
@@ -49,8 +47,6 @@ class SubscriptionUsage extends Model
     ];
 
     protected $casts = [
-        'subscription_id' => 'integer',
-        'feature_id' => 'integer',
         'used' => 'integer',
         'valid_until' => 'datetime',
         'deleted_at' => 'datetime',
