@@ -17,7 +17,7 @@ trait HasSlug
         static::creating(function (Model $model): void {
             if ($model->exists && $model->getSlugOptions()->generateSlugsOnUpdate) {
                 $model->generateSlugOnUpdate();
-            } elseif ( ! $model->exists && $model->getSlugOptions()->generateSlugsOnCreate) {
+            } elseif (! $model->exists && $model->getSlugOptions()->generateSlugsOnCreate) {
                 $model->generateSlugOnCreate();
             }
         });

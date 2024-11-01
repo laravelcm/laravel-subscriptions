@@ -7,7 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Laravelcm\Subscriptions\Interval;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create(config('laravel-subscriptions.tables.plans'), function (Blueprint $table): void {

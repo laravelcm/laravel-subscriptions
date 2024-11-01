@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Laravelcm\Subscriptions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravelcm\Subscriptions\Traits\HasSlug;
 use Laravelcm\Subscriptions\Traits\HasTranslations;
+use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\EloquentSortable\Sortable;
 
 /**
- * Laravelcm\Subscriptions\Models\Plan.
- *
- * @property int $id
+ * @property-read int|string $id
  * @property string $slug
  * @property array $name
  * @property array $description
@@ -96,22 +94,9 @@ class Plan extends Model implements Sortable
     ];
 
     protected $casts = [
-        'slug' => 'string',
         'is_active' => 'boolean',
         'price' => 'float',
         'signup_fee' => 'float',
-        'currency' => 'string',
-        'trial_period' => 'integer',
-        'trial_interval' => 'string',
-        'invoice_period' => 'integer',
-        'invoice_interval' => 'string',
-        'grace_period' => 'integer',
-        'grace_interval' => 'string',
-        'prorate_day' => 'integer',
-        'prorate_period' => 'integer',
-        'prorate_extend_due' => 'integer',
-        'active_subscribers_limit' => 'integer',
-        'sort_order' => 'integer',
         'deleted_at' => 'datetime',
     ];
 
@@ -149,7 +134,8 @@ class Plan extends Model implements Sortable
         return SlugOptions::create()
             ->doNotGenerateSlugsOnUpdate()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->allowDuplicateSlugs();
     }
 
     public function features(): HasMany

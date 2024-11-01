@@ -42,10 +42,11 @@
     "spatie/laravel-translatable": "^6.5.0"
   },
   "require-dev": {
-    "laravel/pint": "^1.13",
     "larastan/larastan": "^2.0",
+    "laravel/pint": "^1.13",
     "orchestra/testbench": "^8.0|^9.0",
-    "pestphp/pest": "^2.18"
+    "pestphp/pest": "^2.18",
+    "spatie/test-time": "^1.3"
   },
   "autoload": {
     "psr-4": {
@@ -59,9 +60,9 @@
     }
   },
   "scripts": {
-    "pest": "./vendor/bin/pest",
-    "pint": "./vendor/bin/pint",
-    "stan": "./vendor/bin/phpstan analyse --memory-limit=2g"
+    "test": "./vendor/bin/pest",
+    "lint": "./vendor/bin/pint",
+    "types": "./vendor/bin/phpstan analyse --memory-limit=2g"
   },
   "config": {
     "sort-packages": true,
