@@ -11,7 +11,7 @@ beforeEach(function (): void {
 
 it('can create a plan', function (): void {
     expect(Plan::count())->toBe(1);
-})->group('plan');
+});
 
 it('a plan can have many features', function (): void {
     expect($this->plan->features()->count())->toBe(0);
@@ -25,7 +25,7 @@ it('a plan can have many features', function (): void {
     ]);
 
     expect($this->plan->features()->count())->toBe(2);
-})->group('plan');
+});
 
 it('a plan can be free with trial period', function (): void {
     $this->plan->update([
@@ -37,7 +37,7 @@ it('a plan can be free with trial period', function (): void {
         ->toBeTrue()
         ->and($this->plan->hasTrial())
         ->toBeTrue();
-})->group('plan');
+});
 
 it('a plan can have a grace period', function (): void {
     $this->plan->update([
@@ -47,4 +47,4 @@ it('a plan can have a grace period', function (): void {
 
     expect($this->plan->hasGrace())
         ->toBeTrue();
-})->group('plan');
+});

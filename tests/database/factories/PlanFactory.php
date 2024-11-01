@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravelcm\Subscriptions\Interval;
 use Tests\Models\Plan;
 
-final class PlanFactory extends Factory
+class PlanFactory extends Factory
 {
     protected $model = Plan::class;
 

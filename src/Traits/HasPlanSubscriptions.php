@@ -7,8 +7,8 @@ namespace Laravelcm\Subscriptions\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Laravelcm\Subscriptions\Models\Subscription;
 use Laravelcm\Subscriptions\Models\Plan;
+use Laravelcm\Subscriptions\Models\Subscription;
 use Laravelcm\Subscriptions\Services\Period;
 
 trait HasPlanSubscriptions
@@ -22,8 +22,6 @@ trait HasPlanSubscriptions
 
     /**
      * The subscriber may have many plan subscriptions.
-     *
-     * @return MorphMany
      */
     public function planSubscriptions(): MorphMany
     {
@@ -42,7 +40,7 @@ trait HasPlanSubscriptions
 
     public function planSubscription(string $subscriptionSlug): ?Subscription
     {
-        return $this->planSubscriptions()->where('slug', $subscriptionSlug)->first();
+        return $this->planSubscriptions()->where('slug', 'like', '%' . $subscriptionSlug . '%')->first();
     }
 
     public function subscribedPlans(): Collection

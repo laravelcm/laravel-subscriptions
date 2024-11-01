@@ -16,7 +16,7 @@ trait HasTranslations
 
     public function getAttributeValue(mixed $key): mixed
     {
-        if ( ! $this->isTranslatableAttribute($key)) {
+        if (! $this->isTranslatableAttribute($key)) {
             return parent::getAttributeValue($key);
         }
 
@@ -37,11 +37,11 @@ trait HasTranslations
             );
 
             // Inject default translation if none supplied
-            if ( ! is_array($value)) {
+            if (! is_array($value)) {
                 $oldValue = $value;
 
                 if ($this->hasSetMutator($key)) {
-                    $method = 'set'.Str::studly($key).'Attribute';
+                    $method = 'set' . Str::studly($key) . 'Attribute';
                     $value = $this->{$method}($value);
                 }
 

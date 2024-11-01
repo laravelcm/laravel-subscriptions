@@ -20,9 +20,7 @@ use LogicException;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * Laravelcm\Subscriptions\Models\Subscription.
- *
- * @property int $id
+ * @property-read int|string $id
  * @property string $subscriber_type
  * @property string $slug
  * @property array $title
@@ -104,7 +102,7 @@ class Subscription extends Model
         'description',
     ];
 
-    public function getTable(): string
+    public function getTable()
     {
         return config('laravel-subscriptions.tables.subscriptions');
     }
@@ -114,7 +112,7 @@ class Subscription extends Model
         parent::boot();
 
         static::creating(function (self $model): void {
-            if ( ! $model->starts_at || ! $model->ends_at) {
+            if (! $model->starts_at || ! $model->ends_at) {
                 $model->setNewPeriod();
             }
         });
@@ -367,7 +365,7 @@ class Subscription extends Model
 
         // If the feature value is zero, let's return false since
         // there's no uses available. (useful to disable countable features)
-        if ( ! $usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
+        if (! $usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
             return false;
         }
 
@@ -382,7 +380,7 @@ class Subscription extends Model
     {
         $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
 
-        return ( ! $usage || $usage->expired()) ? 0 : $usage->used;
+        return (! $usage || $usage->expired()) ? 0 : $usage->used;
     }
 
     /**
