@@ -102,7 +102,7 @@ class Subscription extends Model
         'description',
     ];
 
-    public function getTable(): string
+    public function getTable()
     {
         return config('laravel-subscriptions.tables.subscriptions');
     }
