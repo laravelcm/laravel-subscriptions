@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.3.2](https://github.com/rinvex/laravel-subscriptions/compare/v1.3.1...v1.3.2) - 2024-11-01
+
+### What's Changed
+
+* feat: Disable relation integer casting to allow UUIDs with custom Models by @DanielSpravtsev in https://github.com/laravelcm/laravel-subscriptions/pull/19
+* feat: fix slug generation and add new tests by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/25
+
+### New Contributors
+
+* @DanielSpravtsev made their first contribution in https://github.com/laravelcm/laravel-subscriptions/pull/19
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.3.1...v1.3.2
+
 ## [v1.3.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.3...v1.3.1) - 2024-07-24
 
 ### What's Changed
