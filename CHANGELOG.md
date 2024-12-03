@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.4](https://github.com/rinvex/laravel-subscriptions/compare/v1.3.2...v1.4) - 2024-12-03
+
+### What's Changed
+
+* Multiple features can now be used with the same slug by @chikenare in https://github.com/laravelcm/laravel-subscriptions/pull/28
+* feat: rename `usage`  relation to `usages`  on Feature Model and  refactor Models by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/29
+
+### New Contributors
+
+* @chikenare made their first contribution in https://github.com/laravelcm/laravel-subscriptions/pull/28
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.3.2...v1.4
+
 ## [v1.3.2](https://github.com/rinvex/laravel-subscriptions/compare/v1.3.1...v1.3.2) - 2024-11-01
 
 ### What's Changed
