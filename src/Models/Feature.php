@@ -31,22 +31,22 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read Plan $plan
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\SubscriptionUsage[] $usage
+ * @property-read \Illuminate\Database\Eloquent\Collection|SubscriptionUsage[] $usages
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature byPlanId($planId)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature ordered($direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature wherePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereResettableInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereResettablePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereSortOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Feature whereValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature byPlanId($planId)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature ordered($direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature wherePlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereResettableInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereResettablePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereValue($value)
  */
 class Feature extends Model implements Sortable
 {
@@ -93,7 +93,7 @@ class Feature extends Model implements Sortable
 
     public function getTable(): string
     {
-        return config('laravel-subscriptions.tables.features');
+        return config('laravel-subscriptions.tables.features', 'features');
     }
 
     protected static function boot(): void
@@ -120,7 +120,7 @@ class Feature extends Model implements Sortable
             ->saveSlugsTo('slug');
     }
 
-    public function usage(): HasMany
+    public function usages(): HasMany
     {
         return $this->hasMany(config('laravel-subscriptions.models.subscription_usage'));
     }
