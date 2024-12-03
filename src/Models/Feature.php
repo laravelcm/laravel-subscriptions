@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use InvalidArgumentException;
 use Laravelcm\Subscriptions\Services\Period;
 use Laravelcm\Subscriptions\Traits\BelongsToPlan;
 use Laravelcm\Subscriptions\Traits\HasSlug;
@@ -102,6 +103,12 @@ class Feature extends Model implements Sortable
         static::deleted(function (Feature $feature): void {
             $feature->usage()->delete();
         });
+
+        static::creating(function (Feature $feature) {
+            if (static::where('plan_id', $feature->plan_id)->where('slug', $feature->slug)->exists()) {
+                throw new InvalidArgumentException('Each plan should only have one feature with the same slug');
+            }
+        });
     }
 
     public function getSlugOptions(): SlugOptions
@@ -109,6 +116,7 @@ class Feature extends Model implements Sortable
         return SlugOptions::create()
             ->doNotGenerateSlugsOnUpdate()
             ->generateSlugsFrom('name')
+            ->allowDuplicateSlugs()
             ->saveSlugsTo('slug');
     }
 
