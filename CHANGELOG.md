@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.4.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.4...v1.4.1) - 2025-01-07
+
+### What's Changed
+
+* Fixed duplicate feature slugs. by @mnkincir in https://github.com/laravelcm/laravel-subscriptions/pull/32
+
+### New Contributors
+
+* @mnkincir made their first contribution in https://github.com/laravelcm/laravel-subscriptions/pull/32
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.4...v1.4.1
+
 ## [v1.4](https://github.com/rinvex/laravel-subscriptions/compare/v1.3.2...v1.4) - 2024-12-03
 
 ### What's Changed
