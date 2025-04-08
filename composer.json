@@ -31,11 +31,11 @@
     }
   ],
   "require": {
-    "php": "^8.1",
-    "illuminate/console": "^10.0|^11.0",
-    "illuminate/container": "^10.0|^11.0",
-    "illuminate/database": "^10.0|^11.0",
-    "illuminate/support": "^10.0|^11.0",
+    "php": "^8.2",
+    "illuminate/console": "^10.0|^11.0|^12.0",
+    "illuminate/container": "^10.0|^11.0|^12.0",
+    "illuminate/database": "^10.0|^11.0|^12.0",
+    "illuminate/support": "^10.0|^11.0|^12.0",
     "spatie/eloquent-sortable": "^4.0.0",
     "spatie/laravel-package-tools": "^1.16",
     "spatie/laravel-sluggable": "^3.4.2",
@@ -44,8 +44,8 @@
   "require-dev": {
     "larastan/larastan": "^2.0",
     "laravel/pint": "^1.13",
-    "orchestra/testbench": "^8.0|^9.0",
-    "pestphp/pest": "^2.18",
+    "orchestra/testbench": "^8.0|^9.0|^10.0",
+    "pestphp/pest": "^2.18|^3.7",
     "spatie/test-time": "^1.3"
   },
   "autoload": {
