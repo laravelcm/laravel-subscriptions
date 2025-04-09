@@ -16,7 +16,7 @@ beforeEach(function (): void {
 });
 
 it('User model implement subscription methods', function (): void {
-    expect($this->user)
+    expect(User::class)
         ->toHaveMethods([
             'activePlanSubscriptions',
             'planSubscription',
