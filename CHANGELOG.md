@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.5](https://github.com/rinvex/laravel-subscriptions/compare/v1.4.1...v1.5) - 2025-04-09
+
+### What's Changed
+
+* laravel 12  by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/36
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.4.1...v1.5
+
 ## [v1.4.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.4...v1.4.1) - 2025-01-07
 
 ### What's Changed
