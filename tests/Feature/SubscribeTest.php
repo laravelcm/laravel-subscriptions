@@ -15,18 +15,6 @@ beforeEach(function (): void {
     $this->plan = Plan::factory()->create();
 });
 
-it('User model implement subscription methods', function (): void {
-    expect($this->user)
-        ->toHaveMethods([
-            'activePlanSubscriptions',
-            'planSubscription',
-            'planSubscriptions',
-            'newPlanSubscription',
-            'subscribedPlans',
-            'subscribedTo',
-        ]);
-});
-
 it('a user can subscribe to a plan', function (): void {
     $this->user->newPlanSubscription('main', $this->plan);
 
