@@ -112,7 +112,7 @@ class Subscription extends Model
         parent::boot();
 
         static::creating(function (self $model): void {
-            if (! $model->starts_at || ! $model->ends_at) {
+            if (!$model->starts_at || !$model->ends_at) {
                 $model->setNewPeriod();
             }
         });
@@ -142,12 +142,12 @@ class Subscription extends Model
 
     public function active(): bool
     {
-        return ! $this->ended() || $this->onTrial();
+        return !$this->ended() || $this->onTrial();
     }
 
     public function inactive(): bool
     {
-        return ! $this->active();
+        return !$this->active();
     }
 
     public function onTrial(): bool
@@ -338,7 +338,12 @@ class Subscription extends Model
 
     public function reduceFeatureUsage(string $featureSlug, int $uses = 1): ?SubscriptionUsage
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
+        $feature = $this->plan->features()->where('slug', $featureSlug)->first();
+
+        $usage = $this->usage()->firstOrNew([
+            'subscription_id' => $this->getKey(),
+            'feature_id' => $feature->getKey(),
+        ]);
 
         if ($usage === null) {
             return null;
@@ -357,7 +362,7 @@ class Subscription extends Model
     public function canUseFeature(string $featureSlug): bool
     {
         $featureValue = $this->getFeatureValue($featureSlug);
-        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
+        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
 
         if ($featureValue === 'true') {
             return true;
@@ -365,7 +370,7 @@ class Subscription extends Model
 
         // If the feature value is zero, let's return false since
         // there's no uses available. (useful to disable countable features)
-        if (! $usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
+        if (!$usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
             return false;
         }
 
@@ -378,9 +383,9 @@ class Subscription extends Model
      */
     public function getFeatureUsage(string $featureSlug): int
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
+        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
 
-        return (! $usage || $usage->expired()) ? 0 : $usage->used;
+        return (!$usage || $usage->expired()) ? 0 : $usage->used;
     }
 
     /**
