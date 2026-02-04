@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Laravelcm\Subscriptions\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,43 +23,23 @@ use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property-read int|string $id
- * @property string $subscriber_type
- * @property string $slug
- * @property array $title
- * @property array $description
- * @property Carbon|null $trial_ends_at
- * @property Carbon|null $starts_at
- * @property Carbon|null $ends_at
- * @property Carbon|null $cancels_at
- * @property Carbon|null $canceled_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
+ * @property-read string $subscriber_type
+ * @property-read int|string $subscriber_id
+ * @property-read string $slug
+ * @property-read array $name
+ * @property-read array $description
+ * @property-read int|string $plan_id
+ * @property-read ?CarbonInterface $trial_ends_at
+ * @property-read ?CarbonInterface $starts_at
+ * @property-read ?CarbonInterface $ends_at
+ * @property-read ?CarbonInterface $cancels_at
+ * @property-read ?CarbonInterface $canceled_at
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read ?CarbonInterface $deleted_at
  * @property-read Plan $plan
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\SubscriptionUsage[] $usage
+ * @property-read Collection<int, SubscriptionUsage> $usage
  * @property-read Model $subscriber
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription byPlanId($planId)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription findEndedPeriod()
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription findEndedTrial()
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription findEndingPeriod($dayRange = 3)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription findEndingTrial($dayRange = 3)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription ofSubscriber(\Illuminate\Database\Eloquent\Model $subscriber)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereCanceledAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereCancelsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereEndsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription wherePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereStartsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereTrialEndsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereSubscriberId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereSubscriberType($value)
  */
 class Subscription extends Model
 {
@@ -127,7 +109,11 @@ class Subscription extends Model
         return SlugOptions::create()
             ->doNotGenerateSlugsOnUpdate()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->extraScope(fn ($builder) => $builder
+                ->where('subscriber_type', $this->subscriber_type)
+                ->where('subscriber_id', $this->subscriber_id)
+            );
     }
 
     public function subscriber(): MorphTo
@@ -167,10 +153,10 @@ class Subscription extends Model
 
     public function cancel(bool $immediately = false): self
     {
-        $this->canceled_at = Carbon::now();
+        $this->fill(['canceled_at' => Carbon::now()]);
 
         if ($immediately) {
-            $this->ends_at = $this->canceled_at;
+            $this->fill(['ends_at' => $this->canceled_at]);
         }
 
         $this->save();
@@ -190,7 +176,7 @@ class Subscription extends Model
         }
 
         // Attach new plan to subscription
-        $this->plan_id = $plan->getKey();
+        $this->fill(['plan_id' => $plan->getKey()]);
         $this->save();
 
         return $this;
@@ -217,7 +203,7 @@ class Subscription extends Model
 
             // Renew period
             $subscription->setNewPeriod();
-            $subscription->canceled_at = null;
+            $subscription->fill(['canceled_at' => null]);
             $subscription->save();
         });
 
@@ -300,8 +286,10 @@ class Subscription extends Model
             start: $start ?? Carbon::now()
         );
 
-        $this->starts_at = $period->getStartDate();
-        $this->ends_at = $period->getEndDate();
+        $this->fill([
+            'starts_at' => $period->getStartDate(),
+            'ends_at' => $period->getEndDate(),
+        ]);
 
         return $this;
     }
@@ -310,6 +298,7 @@ class Subscription extends Model
     {
         $feature = $this->plan->features()->where('slug', $featureSlug)->first();
 
+        /** @var SubscriptionUsage $usage */
         $usage = $this->usage()->firstOrNew([
             'subscription_id' => $this->getKey(),
             'feature_id' => $feature->getKey(),
@@ -320,16 +309,18 @@ class Subscription extends Model
             if ($usage->valid_until === null) {
                 // Set date from subscription creation date so the reset
                 // period match the period specified by the subscription's plan.
-                $usage->valid_until = $feature->getResetDate($this->created_at);
+                $usage->fill(['valid_until' => $feature->getResetDate($this->created_at)]);
             } elseif ($usage->expired()) {
                 // If the usage record has been expired, let's assign
                 // a new expiration date and reset the uses to zero.
-                $usage->valid_until = $feature->getResetDate($usage->valid_until);
-                $usage->used = 0;
+                $usage->fill([
+                    'valid_until' => $feature->getResetDate($usage->valid_until),
+                    'used' => 0,
+                ]);
             }
         }
 
-        $usage->used = $incremental ? $usage->used + $uses : $uses;
+        $usage->fill(['used' => $incremental ? $usage->used + $uses : $uses]);
 
         $usage->save();
 
