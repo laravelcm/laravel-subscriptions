@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravelcm\Subscriptions\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,23 +14,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property-read int|string $id
- * @property int $used
- * @property Carbon|null $valid_until
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
+ * @property-read int $feature_id
+ * @property-read int $subscription_id
+ * @property-read int $used
+ * @property-read string $timezone
+ * @property-read ?CarbonInterface $valid_until
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read ?CarbonInterface $deleted_at
  * @property-read Feature $feature
  * @property-read Subscription $subscription
- *
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage byFeatureSlug($featureSlug)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereFeatureId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereSubscriptionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereUsed($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionUsage whereValidUntil($value)
  */
 class SubscriptionUsage extends Model
 {
@@ -41,6 +35,7 @@ class SubscriptionUsage extends Model
         'feature_id',
         'used',
         'valid_until',
+        'timezone',
     ];
 
     protected $casts = [
