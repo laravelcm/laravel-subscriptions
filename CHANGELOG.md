@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.7.2](https://github.com/rinvex/laravel-subscriptions/compare/v1.7.1...v1.7.2) - 2026-02-05
+
+### What's Changed
+
+* fix: remove_cancels_at_from_subscriptions_table on service provider by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/43
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.7.1...v1.7.2
+
 ## [v1.7.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.7...v1.7.1) - 2026-02-05
 
 ### What's Changed
