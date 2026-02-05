@@ -50,7 +50,9 @@ trait HasPlanSubscriptions
             ->pluck('plan_id')
             ->unique();
 
-        return tap(new (config('laravel-subscriptions.models.plan')))->whereIn('id', $planIds)->get();
+        $model = config('laravel-subscriptions.models.plan');
+
+        return $model::whereIn('id', $planIds)->get();
     }
 
     public function subscribedTo(int $planId): bool
