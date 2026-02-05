@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.7.1](https://github.com/rinvex/laravel-subscriptions/compare/v1.7...v1.7.1) - 2026-02-05
+
+### What's Changed
+
+* feat: make free plans never expire by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/42
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.7...v1.7.1
+
 ## [v1.7](https://github.com/rinvex/laravel-subscriptions/compare/v1.6...v1.7) - 2026-02-05
 
 ### What's Changed
