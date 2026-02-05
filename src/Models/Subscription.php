@@ -32,7 +32,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read ?CarbonInterface $trial_ends_at
  * @property-read ?CarbonInterface $starts_at
  * @property-read ?CarbonInterface $ends_at
- * @property-read ?CarbonInterface $cancels_at
  * @property-read ?CarbonInterface $canceled_at
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -59,7 +58,6 @@ class Subscription extends Model
         'trial_ends_at',
         'starts_at',
         'ends_at',
-        'cancels_at',
         'canceled_at',
     ];
 
@@ -69,7 +67,6 @@ class Subscription extends Model
         'trial_ends_at' => 'datetime',
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
-        'cancels_at' => 'datetime',
         'canceled_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
@@ -177,6 +174,15 @@ class Subscription extends Model
 
         // Attach new plan to subscription
         $this->fill(['plan_id' => $plan->getKey()]);
+
+        // Free plans never expire
+        if ($plan->isFree()) {
+            $this->fill([
+                'ends_at' => null,
+                'trial_ends_at' => null,
+            ]);
+        }
+
         $this->save();
 
         return $this;
