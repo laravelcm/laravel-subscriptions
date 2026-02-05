@@ -77,12 +77,19 @@ trait HasPlanSubscriptions
             start: $trial->getEndDate()
         );
 
-        return $this->planSubscriptions()->create([
+        /** @var Subscription $subscription */
+        $subscription = $this->planSubscriptions()->create([
             'name' => $subscription,
             'plan_id' => $plan->getKey(),
             'trial_ends_at' => $trial->getEndDate(),
             'starts_at' => $period->getStartDate(),
             'ends_at' => $period->getEndDate(),
         ]);
+
+        if ($plan->isFree()) {
+            $subscription->update(['ends_at' => null, 'trial_ends_at' => null]);
+        }
+
+        return $subscription;
     }
 }

@@ -59,7 +59,6 @@ class Subscription extends Model
         'trial_ends_at',
         'starts_at',
         'ends_at',
-        'cancels_at',
         'canceled_at',
     ];
 
@@ -177,6 +176,15 @@ class Subscription extends Model
 
         // Attach new plan to subscription
         $this->fill(['plan_id' => $plan->getKey()]);
+
+        // Free plans never expire
+        if ($plan->isFree()) {
+            $this->fill([
+                'ends_at' => null,
+                'trial_ends_at' => null,
+            ]);
+        }
+
         $this->save();
 
         return $this;
