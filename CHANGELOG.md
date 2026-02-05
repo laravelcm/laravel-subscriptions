@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
+## [v1.7](https://github.com/rinvex/laravel-subscriptions/compare/v1.6...v1.7) - 2026-02-05
+
+### What's Changed
+
+* fix: allow canUseFeature to return true when no usage record exists by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/40
+* fix: use static query method in subscribedPlans instead of tap by @mckenziearts in https://github.com/laravelcm/laravel-subscriptions/pull/41
+
+**Full Changelog**: https://github.com/laravelcm/laravel-subscriptions/compare/v1.6...v1.7
+
 ## [v1.6](https://github.com/rinvex/laravel-subscriptions/compare/v1.5...v1.6) - 2026-02-04
 
 ### What's Changed
