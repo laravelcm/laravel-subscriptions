@@ -342,25 +342,28 @@ class Subscription extends Model
         return $usage;
     }
 
-    /**
-     * Determine if the feature can be used.
-     */
     public function canUseFeature(string $featureSlug): bool
     {
         $featureValue = $this->getFeatureValue($featureSlug);
-        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
+
+        if ($featureValue === null) {
+            return false;
+        }
 
         if ($featureValue === 'true') {
             return true;
         }
 
-        // If the feature value is zero, let's return false since
-        // there's no uses available. (useful to disable countable features)
-        if (! $usage || $usage->expired() || $featureValue === null || $featureValue === '0' || $featureValue === 'false') {
+        if ($featureValue === 'false' || $featureValue === '0') {
             return false;
         }
 
-        // Check for available uses
+        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
+
+        if ($usage && $usage->expired()) {
+            return false;
+        }
+
         return $this->getFeatureRemainings($featureSlug) > 0;
     }
 
