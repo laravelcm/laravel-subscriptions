@@ -89,7 +89,7 @@ class Feature extends Model implements Sortable
         parent::boot();
 
         static::deleted(function (Feature $feature): void {
-            $feature->usage()->delete();
+            $feature->usages()->delete();
         });
 
         static::creating(function (Feature $feature) {
