@@ -22,6 +22,9 @@ final class SubscriptionServiceProvider extends PackageServiceProvider
                 'remove_unique_slug_on_subscriptions_table',
                 'update_unique_keys_on_features_table',
                 'remove_cancels_at_from_subscriptions_table',
+
+                'update_features_add_meter_fields_table',
+                'update_subscription_usage_change_used_to_bigint_table',
             ])
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
