@@ -26,6 +26,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $title
  * @property-read array $description
  * @property-read string $value
+ * @property-read string $unit
+ * @property-read string $display_unit
  * @property-read int|string $plan_id
  * @property-read int $resettable_period
  * @property-read string $resettable_interval
@@ -51,6 +53,8 @@ class Feature extends Model implements Sortable
         'name',
         'description',
         'value',
+        'unit',
+        'display_unit',
         'resettable_period',
         'resettable_interval',
         'sort_order',
@@ -59,6 +63,8 @@ class Feature extends Model implements Sortable
     protected $casts = [
         'slug' => 'string',
         'value' => 'string',
+        'unit' => 'string',
+        'display_unit' => 'string',
         'resettable_period' => 'integer',
         'resettable_interval' => 'string',
         'sort_order' => 'integer',
